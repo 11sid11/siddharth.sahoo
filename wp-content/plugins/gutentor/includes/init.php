@@ -149,6 +149,15 @@ class Gutentor {
 		 */
 		require_once GUTENTOR_PATH . 'includes/i18n.php';
 
+        /*Cron*/
+        require_once GUTENTOR_PATH . 'includes/class-gutentor-cron.php';
+
+		/*Pro*/
+		require_once GUTENTOR_PATH . 'includes/pro/gutentor-pro-init.php';
+
+		/*User data*/
+		require_once GUTENTOR_PATH . 'includes/admin/class-gutentor-tracking.php';
+
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
@@ -244,9 +253,6 @@ class Gutentor {
 
 		$plugin_hooks = gutentor_hooks();
 
-		/*Hook: some options for Gutentor.*/
-		$this->loader->add_action( 'customize_register', $plugin_hooks, 'customize_register' );
-
 		/*Hook: Register Scripts*/
 		$this->loader->add_action( 'init', $plugin_hooks, 'register_script_style' );
 
@@ -257,6 +263,7 @@ class Gutentor {
 
 		/*Hook: Editor assets.*/
 		$this->loader->add_action( 'enqueue_block_editor_assets', $plugin_hooks, 'block_editor_assets', 999 );
+		$this->loader->add_action( 'customize_preview_init', $plugin_hooks, 'customize_preview_init', 999 );
 
 		/*Hook: Adding Gutentor Color palatte.*/
 		$this->loader->add_action( 'after_setup_theme', $plugin_hooks, 'add_color_palette', 99999 );

@@ -1477,6 +1477,10 @@ if ( ! class_exists( 'Gutentor_Block_Base' ) ) {
 							'itemValue' => 'meta-comment',
 							'itemLabel' => __( 'Comments' ),
 						),
+						array(
+							'itemValue' => 'meta-tag',
+							'itemLabel' => __( 'Tag' ),
+						),
 					),
 				),
 				'pMeta2Sorting'      => array(
@@ -1497,6 +1501,10 @@ if ( ! class_exists( 'Gutentor_Block_Base' ) ) {
 						array(
 							'itemValue' => 'meta-comment',
 							'itemLabel' => __( 'Comments' ),
+						),
+						array(
+							'itemValue' => 'meta-tag',
+							'itemLabel' => __( 'Tag' ),
 						),
 					),
 				),
@@ -1524,18 +1532,18 @@ if ( ! class_exists( 'Gutentor_Block_Base' ) ) {
 					'type'    => 'boolean',
 					'default' => true,
 				),
-                'pOnIconMeta1'           => array(
-                    'type'    => 'boolean',
-                    'default' => true,
-                ),
+				'pOnIconMeta1'       => array(
+					'type'    => 'boolean',
+					'default' => true,
+				),
 				'pOnMeta2'           => array(
 					'type'    => 'boolean',
 					'default' => false,
 				),
-                'pOnIconMeta2'           => array(
-                    'type'    => 'boolean',
-                    'default' => true,
-                ),
+				'pOnIconMeta2'       => array(
+					'type'    => 'boolean',
+					'default' => true,
+				),
 				'pOnAuthorMeta1'     => array(
 					'type'    => 'boolean',
 					'default' => true,
@@ -1596,7 +1604,7 @@ if ( ! class_exists( 'Gutentor_Block_Base' ) ) {
 							'value' => (int) gutentor_get_options( 'fa-version' ) === 4 ? 'fa fa-play' : 'fas fa-play',
 							'code'  => 'f108',
 						),
-                        'iPos' => 'g-v-popup-c',
+						'iPos' => 'g-v-popup-c',
 					),
 				),
 				'pFVType'            => array(
@@ -1892,18 +1900,18 @@ if ( ! class_exists( 'Gutentor_Block_Base' ) ) {
 					'type'    => 'boolean',
 					'default' => true,
 				),
-                'pOnFPIconMeta1'           => array(
-                    'type'    => 'boolean',
-                    'default' => true,
-                ),
+				'pOnFPIconMeta1'       => array(
+					'type'    => 'boolean',
+					'default' => true,
+				),
 				'pOnFPMeta2'           => array(
 					'type'    => 'boolean',
 					'default' => false,
 				),
-                'pOnFPIconMeta2'           => array(
-                    'type'    => 'boolean',
-                    'default' => true,
-                ),
+				'pOnFPIconMeta2'       => array(
+					'type'    => 'boolean',
+					'default' => true,
+				),
 				'pOnFPAuthorMeta1'     => array(
 					'type'    => 'boolean',
 					'default' => true,
@@ -1944,25 +1952,25 @@ if ( ! class_exists( 'Gutentor_Block_Base' ) ) {
 					'type'    => 'boolean',
 					'default' => true,
 				),
-                'pFFPopupData'        => array(
-                    'type'    => 'object',
-                    'default' => array(
-                        'icon' => array(
-                            'label' => 'fa-book',
-                            'value' => (int) gutentor_get_options( 'fa-version' ) === 4 ? 'fa fa-play' : 'fas fa-play',
-                            'code'  => 'f108',
-                        ),
-                        'iPos' => 'g-v-popup-c',
-                    ),
-                ),
-                'pFFType'           => array(
-                    'type'    => 'string',
-                    'default' => 'img',
-                ),
-                'pFFVType'           => array(
-                    'type'    => 'string',
-                    'default' => 'disable',
-                ),
+				'pFFPopupData'         => array(
+					'type'    => 'object',
+					'default' => array(
+						'icon' => array(
+							'label' => 'fa-book',
+							'value' => (int) gutentor_get_options( 'fa-version' ) === 4 ? 'fa fa-play' : 'fas fa-play',
+							'code'  => 'f108',
+						),
+						'iPos' => 'g-v-popup-c',
+					),
+				),
+				'pFFType'              => array(
+					'type'    => 'string',
+					'default' => 'img',
+				),
+				'pFFVType'             => array(
+					'type'    => 'string',
+					'default' => 'disable',
+				),
 				'pOnFPBtn'             => array(
 					'type'    => 'boolean',
 					'default' => false,

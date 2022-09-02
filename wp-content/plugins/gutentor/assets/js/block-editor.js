@@ -1,6 +1,40 @@
-(function ($) {
-    const gutentorDocument = $(document),
-        gutentorHead = $('head');
+const lodStaticCssOnHead = (staticCss) =>{
+    if( staticCss.id && staticCss.href){
+        let styleSelector = window.document;
+        let iframes = document.getElementsByName('editor-canvas');
+        if( iframes.length){
+            styleSelector = iframes[0].contentDocument;
+        }
+        if (styleSelector.getElementById(staticCss.id) === null) {
+            let link = document.createElement('link');
+            link.type = 'text/css';
+            link.rel = 'stylesheet';
+            link.id = staticCss.id;
+            if( styleSelector.getElementsByTagName("head").length != 0 )
+            {
+                styleSelector.getElementsByTagName("head")[0].appendChild(link);
+                link.href = staticCss.href;
+            }
+            else{
+                styleSelector.getElementsByTagName("body")[0].appendChild(link);
+                link.href = staticCss.href;
+            }
+
+        }
+        else{
+            styleSelector.getElementById(staticCss.id).href = staticCss.href;
+        }
+    }
+}
+
+function EditorReady($, iframes = undefined){
+
+    let gutentorDocument = $(document);
+
+    if (typeof iframes !== 'undefined' && iframes.length) {
+        /*https://stackoverflow.com/questions/5992791/get-iframe-contents-with-a-jquery-selector*/
+        gutentorDocument = $('iframe[name="editor-canvas"]').contents();
+    }
 
     // bind filter button click
     $('.gutentor-filter-group').on('click', '.gutentor-filter-inside', function () {
@@ -22,7 +56,7 @@
     });
 
     gutentorDocument.click(function(e){
-        let popoverContent = $('.gutentor-single-item-edit-actions');
+        let popoverContent = gutentorDocument.find('.gutentor-single-item-edit-actions');
 
         if (
             !$(e.target).closest(".gutentor-single-item-edit-actions").length &&
@@ -114,13 +148,6 @@
         });
 
     });
-
-    // progress bar
-    $('.progressbar').css("width",
-        function () {
-            return $(this).attr("data-width") + "%";
-        }
-    );
 
     /**
      * Call Down
@@ -248,16 +275,13 @@
 
                 let url = '//fonts.googleapis.com/css';
                 url += '?family=' + gutentorFontFamily;
-                if (gutentorHead.children('#gutentor-google-' + uniqueID).length) {
-                    gutentorHead.children('#gutentor-google-' + uniqueID).attr('href', url);
-                } else {
-                    gutentorHead.append($("<link/>", {
-                        rel: "stylesheet",
-                        href: url,
-                        type: "text/css",
-                        id: 'gutentor-google-' + uniqueID
-                    }));
-                }
+
+                lodStaticCssOnHead(
+                    {
+                        id: '#gutentor-google-' + uniqueID,
+                        href: url
+                    }
+                );
             }
         }, 300);
     });
@@ -281,4 +305,45 @@
     gutentorDocument.on('click', '.g-filter-col-inspectors .css-10nd86i', function () {
         $(this).closest(".g-filter-col-inspectors").toggleClass("g-filter-selected");
     });
+}
+
+(function ($) {
+    function preEditor(){
+        if(window.location.href.indexOf("site-editor.php") > -1) {
+            let blockLoaded = false;
+            let blockLoadedInterval = setInterval(function() {
+
+                let iframes = $('iframe[name="editor-canvas"]');
+                if (iframes.length) {/*post-title-0 is ID of Post Title Textarea*/
+                    //Actual functions goes here
+                    EditorReady($, iframes);
+
+                    blockLoaded = true;
+                }
+                if ( blockLoaded ) {
+                    clearInterval( blockLoadedInterval );
+                }
+            }, 500);
+        }
+        else{
+            EditorReady($);
+        }
+    }
+    preEditor();
+
+
+    /*https://stackoverflow.com/questions/47917596/listener-event-for-when-url-parameters-change*/
+    (function(history){
+        const pushState = history.pushState;
+        history.pushState = function(state) {
+            if (typeof history.onpushstate == "function") {
+                history.onpushstate({state: state});
+            }
+            // Call your custom function here
+            preEditor();
+            return pushState.apply(history, arguments);
+        }
+    })(window.history);
+
 })(jQuery);
+

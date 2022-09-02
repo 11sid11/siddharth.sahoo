@@ -88,6 +88,10 @@ if ( ! class_exists( 'Gutentor_P5' ) ) {
 					'type'    => 'string',
 					'default' => 'category',
 				),
+                'pTaxOperator'                        => array(
+                    'type'    => 'string',
+                    'default' => 'IN',
+                ),
 				'pTaxTerm'                        => array(
 					'type'  => 'array',
 					'items' => array(
@@ -205,8 +209,8 @@ if ( ! class_exists( 'Gutentor_P5' ) ) {
 				isset( $attributes['pTaxTerm'] ) && ! empty( $attributes['pTaxTerm'] ) ) {
 
 				$args['taxonomy'] = $attributes['pTaxType'];
-
-				if ( is_array( $attributes['pTaxTerm'] ) ) {
+                $args['taxOperator'] = $attributes['pTaxOperator'] ? $attributes['pTaxOperator'] : 'IN';
+                if ( is_array( $attributes['pTaxTerm'] ) ) {
 					$p1_terms = array();
 					foreach ( $attributes['pTaxTerm'] as $p1_term ) {
 						$p1_terms [] = $p1_term['value'];

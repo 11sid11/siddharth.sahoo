@@ -89,6 +89,145 @@ if ( ! class_exists( 'Gutentor_Dynamic_CSS' ) ) :
 			add_filter( 'wp_enqueue_scripts', array( $this, 'enqueue_google_fonts' ), 9998 );
 			add_filter( 'admin_head', array( $this, 'admin_enqueue_google_fonts' ), 100 );
 
+			/*Dynamic Google Fonts for FSE*/
+			add_filter( 'gutentor_block_editor_localize_data', array( $this, 'render_fse_admin_css' ), 100 );
+		}
+
+		/**
+		 * Render FSE admin css
+		 * For google fonts
+		 * Probably temporary solution
+		 * Should be fixed from JS solution
+		 *
+		 * TODO : JS
+		 *
+		 * @since    3.1.9
+		 * @access   public
+		 *
+		 * @return array
+		 */
+		public function render_fse_admin_css( $localize_data ) {
+
+			if ( gutentor_is_site_editor_screen() ) {
+				$block_templates = get_block_templates();
+
+				if ( $block_templates ) {
+					$fonts = array();
+					foreach ( $block_templates as $template_info ) {
+						if ( isset( $template_info->wp_id ) && $template_info->wp_id ) {
+							$cssPrefix = $template_info->wp_id;
+							if ( get_post_meta( $cssPrefix, 'gutentor_gfont_url', true ) ) {
+								$fonts_url = get_post_meta( $cssPrefix, 'gutentor_gfont_url', true );
+								$fonts_url = apply_filters( 'gutentor_google_fonts', $fonts_url );
+								if ( $fonts_url ) {
+									$fonts [] = array(
+										'id'  => $cssPrefix,
+										'url' => esc_url( $fonts_url ),
+									);
+								}
+							}
+						}
+					}
+					$localize_data['fseGfonts'] = $fonts;
+				}
+			}
+			return $localize_data;
+
+		}
+
+		/**
+		 * Get core template parts from blocks
+		 *
+		 * @since    3.2.4
+		 * @access   private
+		 *
+		 * @return array|boolean
+		 */
+		private function get_core_template_part( $blocks ) {
+			$core_template_parts = array();
+			foreach ( $blocks as $block ) {
+				if ( 'core/template-part' === $block['blockName'] ) {
+					$core_template_parts[] = $block;
+				}
+				if ( isset( $block['innerBlocks'] ) &&
+					! empty( $block['innerBlocks'] ) &&
+					is_array( $block['innerBlocks'] )
+				) {
+					if ( $this->get_core_template_part( $block['innerBlocks'] ) ) {
+						$core_template_parts = array_merge( $core_template_parts, $this->get_core_template_part( $block['innerBlocks'] ) );
+					}
+				}
+			}
+			if ( ! empty( $core_template_parts ) ) {
+				return $core_template_parts;
+			}
+			return false;
+		}
+
+		/**
+		 * Render FSE public css
+		 * TODO : May be file and head support
+		 *
+		 * @since    3.1.9
+		 * @access   public
+		 *
+		 * @return array
+		 */
+		public function render_fse_public_css() {
+			if ( ! current_theme_supports( 'block-templates' ) ) {
+				return;
+			}
+			global $_wp_current_template_content;
+
+			if ( $_wp_current_template_content ) {
+				$blocks = parse_blocks( $_wp_current_template_content );
+
+				require_once GUTENTOR_PATH . 'includes/tools/class-gutentor-tempalte-info.php';
+
+				global $wp_filesystem;
+				if ( ! $wp_filesystem ) {
+					require_once ABSPATH . 'wp-admin' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'file.php';
+				}
+				$upload_dir = wp_upload_dir();
+
+				$template_info = Gutentor_Template_Info::get_instance()->get_template_info();
+				if ( isset( $template_info->wp_id ) && $template_info->wp_id ) {
+					$cssPrefix = $template_info->wp_id;
+					$css_info  = get_post_meta( $cssPrefix, 'gutentor_css_info', true );
+					wp_enqueue_style( 'gutentor-dynamic-' . $cssPrefix, trailingslashit( $upload_dir['baseurl'] ) . 'gutentor/p-' . $cssPrefix . '.css', false, isset( $css_info['saved_version'] ) ? $css_info['saved_version'] : '' );
+
+					/*Google Fonts*/
+					if ( get_post_meta( $cssPrefix, 'gutentor_gfont_url', true ) ) {
+						$fonts_url = get_post_meta( $cssPrefix, 'gutentor_gfont_url', true );
+						$fonts_url = apply_filters( 'gutentor_google_fonts', $fonts_url );
+						if ( $fonts_url ) {
+							wp_enqueue_style( 'gutentor-google-fonts-' . $cssPrefix, esc_url( $fonts_url ) );
+						}
+					}
+				}
+
+				$core_template_parts = $this->get_core_template_part( $blocks );
+				if ( $core_template_parts ) {
+
+					foreach ( $core_template_parts as $block ) {
+						$template_parts_info = Gutentor_Template_Info::get_instance()->get_template_part_info( $block['attrs'] );
+
+						if ( isset( $template_parts_info->ID ) && $template_parts_info->ID ) {
+							$cssPrefix = $template_parts_info->ID;
+							$css_info  = get_post_meta( $cssPrefix, 'gutentor_css_info', true );
+							wp_enqueue_style( 'gutentor-dynamic-' . $cssPrefix, trailingslashit( $upload_dir['baseurl'] ) . 'gutentor/p-' . $cssPrefix . '.css', false, isset( $css_info['saved_version'] ) ? $css_info['saved_version'] : '' );
+							/*Google Fonts*/
+							if ( get_post_meta( $cssPrefix, 'gutentor_gfont_url', true ) ) {
+								$fonts_url = get_post_meta( $cssPrefix, 'gutentor_gfont_url', true );
+								$fonts_url = apply_filters( 'gutentor_google_fonts', $fonts_url );
+								if ( $fonts_url ) {
+									wp_enqueue_style( 'gutentor-google-fonts-' . $cssPrefix, esc_url( $fonts_url ) );
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 
 		/**
@@ -825,7 +964,6 @@ if ( ! class_exists( 'Gutentor_Dynamic_CSS' ) ) :
 			if ( ! is_admin() ) {
 				return false;
 			}
-
 			if ( in_array( $pagenow, array( 'post.php', 'post-new.php' ) ) ) {
 
 				if ( ! $this->isGutentorMetaExists() ) {
@@ -1006,7 +1144,7 @@ if ( ! class_exists( 'Gutentor_Dynamic_CSS' ) ) :
 		 * @return void
 		 */
 		public function load_lib_assets( $blocks ) {
-			if ( is_array( $blocks ) && !empty( $blocks ) ) {
+			if ( is_array( $blocks ) && ! empty( $blocks ) ) {
 				/*
 				   fontawesome CSS
 				   load front end and backend
@@ -1179,6 +1317,10 @@ if ( ! class_exists( 'Gutentor_Dynamic_CSS' ) ) :
 		 * @return void|boolean
 		 */
 		public function enqueue_google_fonts( $head = false ) {
+			/*FSE CSS for frontend only*/
+			if ( ! is_admin() ) {
+				gutentor_dynamic_css()->render_fse_public_css();
+			}
 			/*Singular*/
 			if ( is_singular() || gutentor_is_edit_page() ) {
 				$fonts_url = '';

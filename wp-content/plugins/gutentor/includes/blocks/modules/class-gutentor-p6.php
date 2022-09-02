@@ -116,6 +116,10 @@ if ( ! class_exists( 'Gutentor_P6' ) ) {
 					'type'    => 'string',
 					'default' => 'category',
 				),
+                'pTaxOperator'                        => array(
+                    'type'    => 'string',
+                    'default' => 'IN',
+                ),
 				'pPostType'                       => array(
 					'type'    => 'string',
 					'default' => 'post',
@@ -276,6 +280,7 @@ if ( ! class_exists( 'Gutentor_P6' ) ) {
 				isset( $attributes['pTaxTerm'] ) && ! empty( $attributes['pTaxTerm'] ) ) {
 
 				$query_args['taxonomy'] = $attributes['pTaxType'];
+                $query_args['taxOperator'] = $attributes['pTaxOperator'] ? $attributes['pTaxOperator'] : 'IN';
 
 				if ( is_array( $attributes['pTaxTerm'] ) ) {
 					$p1_terms = array();

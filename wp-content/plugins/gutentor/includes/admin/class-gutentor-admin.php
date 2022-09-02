@@ -209,10 +209,14 @@ if ( ! class_exists( 'Gutentor_Admin' ) ) {
 		 */
 		public static function admin_scripts_js() {
 			$screen              = get_current_screen();
-			$admin_scripts_bases = array( 'toplevel_page_gutentor', 'gutentor_page_gutentor-blocks', 'gutentor_page_gutentor-settings', 'term', 'edit-tags' );
+			$admin_scripts_bases = array( 'toplevel_page_gutentor', 'gutentor_page_gutentor-blocks', 'gutentor_page_gutentor-settings', 'gutentor_page_gutentor-pro-license', 'term', 'edit-tags' );
 			$admin_scripts_bases = apply_filters( 'gutentor_admin_scripts_current_screen', $admin_scripts_bases );
 			if ( ! ( isset( $screen->base ) &&
-				in_array( $screen->base, $admin_scripts_bases ) )
+				(
+						( in_array( $screen->base, $admin_scripts_bases ) ) ||
+						( in_array( get_post_type(), array( 'gutentor-fonts', 'gutentor-icons' ) ) )
+				)
+			)
 			) {
 				return;
 			}
@@ -560,10 +564,10 @@ if ( ! class_exists( 'Gutentor_Admin' ) ) {
 					'title'       => esc_html__( 'Icon Group ', 'gutentor' ),
 					'description' => esc_html__( 'Insert multiple icons in the Icon Group and create beautiful social profile links and icon designs.', 'gutentor' ),
 				),
-                'm12' => array(
-                    'title'       => esc_html__( 'Quote', 'gutentor' ),
-                    'description' => esc_html__( 'Quote is the collection of element blocks which create a adorable quote design.', 'gutentor' ),
-                ),
+				'm12' => array(
+					'title'       => esc_html__( 'Quote', 'gutentor' ),
+					'description' => esc_html__( 'Quote is the collection of element blocks which create a adorable quote design.', 'gutentor' ),
+				),
 				'm5'  => array(
 					'title'       => esc_html__( 'Slider ', 'gutentor' ),
 					'description' => esc_html__( 'Insert slider container and add elements within the container.', 'gutentor' ),
@@ -578,6 +582,22 @@ if ( ! class_exists( 'Gutentor_Admin' ) ) {
 				),
 
 			);
+
+			if ( gutentor_pro_active() ) {
+				$gutentor_modules['m14'] = array(
+					'title'       => esc_html__( 'Advance Show More', 'gutentor' ),
+					'description' => esc_html__( 'Advance Show More is extended version of show more widget with innerblocks.', 'gutentor' ),
+				);
+				$gutentor_modules['m15'] = array(
+					'title'       => esc_html__( 'PopOver', 'gutentor' ),
+					'description' => esc_html__( 'PopOver is extended version of show more widget with innerblocks.', 'gutentor' ),
+				);
+				$gutentor_modules['m16'] = array(
+					'title'       => esc_html__( 'Wrapper', 'gutentor' ),
+					'description' => esc_html__( 'Use it as wrapper block for gutentor elements, and other blocks, control width and design beautiful block section.', 'gutentor' ),
+				);
+
+			}
 
 			return apply_filters( 'gutentor_modules_in_admin_page', $gutentor_modules );
 		}
@@ -644,10 +664,10 @@ if ( ! class_exists( 'Gutentor_Admin' ) ) {
 					'title'       => esc_html__( 'Accordion Widget', 'gutentor' ),
 					'description' => esc_html__( 'The Accordion Widget helps you to display information in collapsible rows with title ,description and button. Generally this block can be helpful for display FAQ and other informative message. ', 'gutentor' ),
 				),
-                'list'    => array(
-                    'title'       => esc_html__( 'Advanced List Widget', 'gutentor' ),
-                    'description' => esc_html__( 'Not just a regular list but create an awesome list by adding image and icon on the advanced list widget.', 'gutentor' ),
-                ),
+				'list'            => array(
+					'title'       => esc_html__( 'Advanced List Widget', 'gutentor' ),
+					'description' => esc_html__( 'Not just a regular list but create an awesome list by adding image and icon on the advanced list widget.', 'gutentor' ),
+				),
 				'author-profile'  => array(
 					'title'       => esc_html__( 'Author Widget', 'gutentor' ),
 					'description' => esc_html__( 'The Author Widget allows user to display information related to author with title, description and button', 'gutentor' ),
@@ -692,18 +712,18 @@ if ( ! class_exists( 'Gutentor_Admin' ) ) {
 					'title'       => esc_html__( 'Image Widget', 'gutentor' ),
 					'description' => esc_html__( 'The Image Widget display information with image, title, description and button which modify by available features and cool templates.', 'gutentor' ),
 				),
-                'image-slider'    => array(
+				'image-slider'    => array(
 					'title'       => esc_html__( 'Image Slider Widget', 'gutentor' ),
 					'description' => esc_html__( 'The Image Slider Widget display adorable slider with image, title, description and button which modify by available features and cool templates.', 'gutentor' ),
 				),
-				'notification'   => array(
+				'notification'    => array(
 					'title'       => esc_html__( 'Notification Widget', 'gutentor' ),
 					'description' => esc_html__( 'The Notification Widget facilitates to show different type of information(Warning,Error,Success).', 'gutentor' ),
 				),
-                'opening-hours'   => array(
-                    'title'       => esc_html__( 'Opening Hours Widget', 'gutentor' ),
-                    'description' => esc_html__( 'The Opening Hours Widget depicts the information related to opening schedule of any organization.', 'gutentor' ),
-                ),
+				'opening-hours'   => array(
+					'title'       => esc_html__( 'Opening Hours Widget', 'gutentor' ),
+					'description' => esc_html__( 'The Opening Hours Widget depicts the information related to opening schedule of any organization.', 'gutentor' ),
+				),
 				'pricing'         => array(
 					'title'       => esc_html__( 'Pricing Widget', 'gutentor' ),
 					'description' => esc_html__( 'The Pricing Widget represents the pricing details of any commodity with number of customize features.', 'gutentor' ),
@@ -716,10 +736,10 @@ if ( ! class_exists( 'Gutentor_Admin' ) ) {
 					'title'       => esc_html__( 'Restaurant Menu Widget', 'gutentor' ),
 					'description' => esc_html__( 'The Restaurant Menu Widget represents the information items and recipes available in restaurant with different features and cool templates.', 'gutentor' ),
 				),
-                'show-more'          => array(
-                    'title'       => esc_html__( 'Show More Widget', 'gutentor' ),
-                    'description' => esc_html__( 'Add small text to show details text with show more button.', 'gutentor' ),
-                ),
+				'show-more'       => array(
+					'title'       => esc_html__( 'Show More Widget', 'gutentor' ),
+					'description' => esc_html__( 'Add small text to show details text with show more button.', 'gutentor' ),
+				),
 				'social'          => array(
 					'title'       => esc_html__( 'Social links Widget', 'gutentor' ),
 					'description' => esc_html__( 'The Social links Widget displays the social networks page on website with different templates and a number of features.', 'gutentor' ),

@@ -149,6 +149,8 @@ if ( ! class_exists( 'Gutentor_Advanced_Import' ) ) {
 								$templates_list = $demo_server;
 							}
 						}
+					} else {
+						return rest_ensure_response( $raw_json->get_error_message() );
 					}
 				} else {
 					/*

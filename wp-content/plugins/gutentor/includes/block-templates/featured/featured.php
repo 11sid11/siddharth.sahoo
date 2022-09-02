@@ -519,12 +519,9 @@ if ( ! class_exists( 'Gutentor_Featured' ) ) {
 			$no_thumb       = '';
 			$bg_image       = '';
 			$url            = '';
-			$tax_in_image   = gutentor_get_options( 'tax-in-image' );
 			$thumbnail_size = ( isset( $attributes['tFImgSize'] ) ) ? $attributes['tFImgSize'] : 'large';
 
-			if ( $this->has_term_thumbnail( $term ) &&
-				is_array( $tax_in_image ) && in_array( $term->taxonomy, $tax_in_image )
-			) {
+			if ( $this->has_term_thumbnail( $term ) ) {
 				$image_url = wp_get_attachment_image_src( $this->get_term_thumbnail_id( $term ), $thumbnail_size );
 				if ( ! $image_url ) {
 					$image_url[0] = GUTENTOR_URL . 'assets/img/default-image.jpg';

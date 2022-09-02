@@ -516,12 +516,19 @@ if ( ! function_exists( 'gutentor_get_default_options' ) ) :
 				'map-api'               => 'AIzaSyAq-PUmXMM3M2aQnwUslzap0TXaGyZlqZE',
 				'off-blocks'            => '',
 				'ptel'                  => '', /*Post type elements*/
+				'ttel'                  => '', /*term elements*/
 				'tax-in-color'          => '',
 				'tax-in-image'          => '',
 				'typo-apply-options'    => 'global',
 				'wide-width-editor'     => false,
 				'page-templates-in-pt'  => '',
 				'videos-in-pt'          => '',
+				'maintenance-mode'      => 'disabled',
+				'maintenance-access'    => 'none',
+				'maintenance-template'  => '-1',
+				'allow-tracking'        => false,
+				'on-popup'              => false,
+				'popup-load'            => 'ajax',
 			);
 
 			/*Global Color*/
@@ -708,71 +715,71 @@ if ( ! function_exists( 'gutentor_default_color_palettes' ) ) {
  * @access   public
  */
 if ( ! function_exists( 'gutentor_pm_post_dynamic_categories_color' ) ) {
-	function gutentor_pm_post_dynamic_categories_color( $terms = array()) {
+	function gutentor_pm_post_dynamic_categories_color( $terms = array() ) {
 		$important = ' !important;';
 
 		/* device type */
 		$local_dynamic_css = '';
-		if($terms && !empty($terms)){
-		    foreach ($terms as $term ){
-                $category_list = get_term($term);
+		if ( $terms && ! empty( $terms ) ) {
+			foreach ( $terms as $term ) {
+				$category_list = get_term( $term );
 
-                /*get customize id*/
-                $cat_color = 'gutentor-cat-' . esc_attr( $category_list->term_id );
-                /* get category Color options */
-                $text_color       = '#1974d2';
-                $bg               = '#ffffff';
-                $hover_bg         = '#ffffff';
-                $hover_text_color = '#1974d2';
-                $gutentor_meta    = get_term_meta( $category_list->term_id, 'gutentor_meta', true );
-                if ( $gutentor_meta ) {
-                    $bg               = isset( $gutentor_meta['bg-color'] ) ? $gutentor_meta['bg-color'] : '';
-                    $hover_bg         = isset( $gutentor_meta['bg-hover-color'] ) ? $gutentor_meta['bg-hover-color'] : '';
-                    $text_color       = isset( $gutentor_meta['text-color'] ) ? $gutentor_meta['text-color'] : '';
-                    $hover_text_color = isset( $gutentor_meta['text-hover-color'] ) ? $gutentor_meta['text-hover-color'] : '';
-                } elseif ( get_option( $cat_color ) ) {/*backward compatibility*/
-                    $gutentor_cat_options = get_option( $cat_color );
-                    $gutentor_cat_options = json_decode( $gutentor_cat_options, true );
+				/*get customize id*/
+				$cat_color = 'gutentor-cat-' . esc_attr( $category_list->term_id );
+				/* get category Color options */
+				$text_color       = '#1974d2';
+				$bg               = '#ffffff';
+				$hover_bg         = '#ffffff';
+				$hover_text_color = '#1974d2';
+				$gutentor_meta    = get_term_meta( $category_list->term_id, 'gutentor_meta', true );
+				if ( $gutentor_meta ) {
+					$bg               = isset( $gutentor_meta['bg-color'] ) ? $gutentor_meta['bg-color'] : '';
+					$hover_bg         = isset( $gutentor_meta['bg-hover-color'] ) ? $gutentor_meta['bg-hover-color'] : '';
+					$text_color       = isset( $gutentor_meta['text-color'] ) ? $gutentor_meta['text-color'] : '';
+					$hover_text_color = isset( $gutentor_meta['text-hover-color'] ) ? $gutentor_meta['text-hover-color'] : '';
+				} elseif ( get_option( $cat_color ) ) {/*backward compatibility*/
+					$gutentor_cat_options = get_option( $cat_color );
+					$gutentor_cat_options = json_decode( $gutentor_cat_options, true );
 
-                    $bg               = isset( $gutentor_cat_options['background-color'] ) && ! empty( $gutentor_cat_options['background-color'] ) ? $gutentor_cat_options['background-color'] : '';
-                    $hover_bg         = isset( $gutentor_cat_options['background-hover-color'] ) && ! empty( $gutentor_cat_options['background-hover-color'] ) ? $gutentor_cat_options['background-hover-color'] : '';
-                    $text_color       = isset( $gutentor_cat_options['text-color'] ) && ! empty( $gutentor_cat_options['text-color'] ) ? $gutentor_cat_options['text-color'] : '';
-                    $hover_text_color = isset( $gutentor_cat_options['text-hover-color'] ) && ! empty( $gutentor_cat_options['text-hover-color'] ) ? $gutentor_cat_options['text-hover-color'] : '';
-                }
+					$bg               = isset( $gutentor_cat_options['background-color'] ) && ! empty( $gutentor_cat_options['background-color'] ) ? $gutentor_cat_options['background-color'] : '';
+					$hover_bg         = isset( $gutentor_cat_options['background-hover-color'] ) && ! empty( $gutentor_cat_options['background-hover-color'] ) ? $gutentor_cat_options['background-hover-color'] : '';
+					$text_color       = isset( $gutentor_cat_options['text-color'] ) && ! empty( $gutentor_cat_options['text-color'] ) ? $gutentor_cat_options['text-color'] : '';
+					$hover_text_color = isset( $gutentor_cat_options['text-hover-color'] ) && ! empty( $gutentor_cat_options['text-hover-color'] ) ? $gutentor_cat_options['text-hover-color'] : '';
+				}
 
-                /*Cat normal color */
-                $cat_color_css = '';
-                if ( $text_color ) {
-                    $cat_color_css .= 'color:' . $text_color . $important;
-                }
-                /*Cat bg color */
-                if ( $bg ) {
-                    $cat_color_css .= 'background:' . $bg . $important;
-                }
-                /*Add cat color css */
-                if ( ! empty( $cat_color_css ) ) {
-                    $local_dynamic_css .= ".gutentor-categories .gutentor-cat-{$category_list->slug}{
+				/*Cat normal color */
+				$cat_color_css = '';
+				if ( $text_color ) {
+					$cat_color_css .= 'color:' . $text_color . $important;
+				}
+				/*Cat bg color */
+				if ( $bg ) {
+					$cat_color_css .= 'background:' . $bg . $important;
+				}
+				/*Add cat color css */
+				if ( ! empty( $cat_color_css ) ) {
+					$local_dynamic_css .= ".gutentor-categories .gutentor-cat-{$category_list->slug}{
                        " . $cat_color_css . '
                     }';
-                }
+				}
 
-                /* cat hover color */
-                $cat_color_hover_css = '';
-                if ( $hover_bg ) {
-                    $cat_color_hover_css .= 'color:' . $hover_bg . $important;
-                }
-                /* cat hover  bg color */
-                if ( $hover_text_color ) {
-                    $cat_color_hover_css .= 'background:' . $hover_text_color . $important;
-                }
-                /*add hover css*/
-                if ( ! empty( $cat_color_hover_css ) ) {
-                    $local_dynamic_css .= ".gutentor-categories .gutentor-cat-{$category_list->slug}:hover{
+				/* cat hover color */
+				$cat_color_hover_css = '';
+				if ( $hover_bg ) {
+					$cat_color_hover_css .= 'color:' . $hover_bg . $important;
+				}
+				/* cat hover  bg color */
+				if ( $hover_text_color ) {
+					$cat_color_hover_css .= 'background:' . $hover_text_color . $important;
+				}
+				/*add hover css*/
+				if ( ! empty( $cat_color_hover_css ) ) {
+					$local_dynamic_css .= ".gutentor-categories .gutentor-cat-{$category_list->slug}:hover{
                         " . $cat_color_hover_css . '
                     }';
-                }
-            }
-        }
+				}
+			}
+		}
 		return $local_dynamic_css;
 	}
 }
@@ -787,77 +794,77 @@ if ( ! function_exists( 'gutentor_pm_post_dynamic_categories_color' ) ) {
  * @access   public
  */
 if ( ! function_exists( 'gutentor_pm_post_categories_color' ) ) {
-    function gutentor_pm_post_categories_color( $imp = false ) {
-        $important = $imp ? ' !important;' : ';';
+	function gutentor_pm_post_categories_color( $imp = false ) {
+		$important = $imp ? ' !important;' : ';';
 
-        /* device type */
-        $local_dynamic_css = '';
-        /*category color options*/
-        $args       = array(
-            'orderby'    => 'id',
-            'hide_empty' => 0,
-        );
-        $categories = get_categories( $args );
-        if ( $categories ) {
-            foreach ( $categories as $category_list ) {
-                /*get customize id*/
-                $cat_color = 'gutentor-cat-' . esc_attr( $category_list->term_id );
-                /* get category Color options */
-                $text_color       = '#1974d2';
-                $bg               = '#ffffff';
-                $hover_bg         = '#ffffff';
-                $hover_text_color = '#1974d2';
-                $gutentor_meta    = get_term_meta( $category_list->term_id, 'gutentor_meta', true );
-                if ( $gutentor_meta ) {
-                    $bg               = isset( $gutentor_meta['bg-color'] ) ? $gutentor_meta['bg-color'] : '';
-                    $hover_bg         = isset( $gutentor_meta['bg-hover-color'] ) ? $gutentor_meta['bg-hover-color'] : '';
-                    $text_color       = isset( $gutentor_meta['text-color'] ) ? $gutentor_meta['text-color'] : '';
-                    $hover_text_color = isset( $gutentor_meta['text-hover-color'] ) ? $gutentor_meta['text-hover-color'] : '';
-                } elseif ( get_option( $cat_color ) ) {/*backward compatibility*/
-                    $gutentor_cat_options = get_option( $cat_color );
-                    $gutentor_cat_options = json_decode( $gutentor_cat_options, true );
+		/* device type */
+		$local_dynamic_css = '';
+		/*category color options*/
+		$args       = array(
+			'orderby'    => 'id',
+			'hide_empty' => 0,
+		);
+		$categories = get_categories( $args );
+		if ( $categories ) {
+			foreach ( $categories as $category_list ) {
+				/*get customize id*/
+				$cat_color = 'gutentor-cat-' . esc_attr( $category_list->term_id );
+				/* get category Color options */
+				$text_color       = '#1974d2';
+				$bg               = '#ffffff';
+				$hover_bg         = '#ffffff';
+				$hover_text_color = '#1974d2';
+				$gutentor_meta    = get_term_meta( $category_list->term_id, 'gutentor_meta', true );
+				if ( $gutentor_meta ) {
+					$bg               = isset( $gutentor_meta['bg-color'] ) ? $gutentor_meta['bg-color'] : '';
+					$hover_bg         = isset( $gutentor_meta['bg-hover-color'] ) ? $gutentor_meta['bg-hover-color'] : '';
+					$text_color       = isset( $gutentor_meta['text-color'] ) ? $gutentor_meta['text-color'] : '';
+					$hover_text_color = isset( $gutentor_meta['text-hover-color'] ) ? $gutentor_meta['text-hover-color'] : '';
+				} elseif ( get_option( $cat_color ) ) {/*backward compatibility*/
+					$gutentor_cat_options = get_option( $cat_color );
+					$gutentor_cat_options = json_decode( $gutentor_cat_options, true );
 
-                    $bg               = isset( $gutentor_cat_options['background-color'] ) && ! empty( $gutentor_cat_options['background-color'] ) ? $gutentor_cat_options['background-color'] : '';
-                    $hover_bg         = isset( $gutentor_cat_options['background-hover-color'] ) && ! empty( $gutentor_cat_options['background-hover-color'] ) ? $gutentor_cat_options['background-hover-color'] : '';
-                    $text_color       = isset( $gutentor_cat_options['text-color'] ) && ! empty( $gutentor_cat_options['text-color'] ) ? $gutentor_cat_options['text-color'] : '';
-                    $hover_text_color = isset( $gutentor_cat_options['text-hover-color'] ) && ! empty( $gutentor_cat_options['text-hover-color'] ) ? $gutentor_cat_options['text-hover-color'] : '';
-                }
+					$bg               = isset( $gutentor_cat_options['background-color'] ) && ! empty( $gutentor_cat_options['background-color'] ) ? $gutentor_cat_options['background-color'] : '';
+					$hover_bg         = isset( $gutentor_cat_options['background-hover-color'] ) && ! empty( $gutentor_cat_options['background-hover-color'] ) ? $gutentor_cat_options['background-hover-color'] : '';
+					$text_color       = isset( $gutentor_cat_options['text-color'] ) && ! empty( $gutentor_cat_options['text-color'] ) ? $gutentor_cat_options['text-color'] : '';
+					$hover_text_color = isset( $gutentor_cat_options['text-hover-color'] ) && ! empty( $gutentor_cat_options['text-hover-color'] ) ? $gutentor_cat_options['text-hover-color'] : '';
+				}
 
-                /*Cat normal color */
-                $cat_color_css = '';
-                if ( $text_color ) {
-                    $cat_color_css .= 'color:' . $text_color . $important;
-                }
-                /*Cat bg color */
-                if ( $bg ) {
-                    $cat_color_css .= 'background:' . $bg . $important;
-                }
-                /*Add cat color css */
-                if ( ! empty( $cat_color_css ) ) {
-                    $local_dynamic_css .= ".gutentor-categories .gutentor-cat-{$category_list->slug}{
+				/*Cat normal color */
+				$cat_color_css = '';
+				if ( $text_color ) {
+					$cat_color_css .= 'color:' . $text_color . $important;
+				}
+				/*Cat bg color */
+				if ( $bg ) {
+					$cat_color_css .= 'background:' . $bg . $important;
+				}
+				/*Add cat color css */
+				if ( ! empty( $cat_color_css ) ) {
+					$local_dynamic_css .= ".gutentor-categories .gutentor-cat-{$category_list->slug}{
                        " . $cat_color_css . '
                     }';
-                }
+				}
 
-                /* cat hover color */
-                $cat_color_hover_css = '';
-                if ( $hover_bg ) {
-                    $cat_color_hover_css .= 'color:' . $hover_bg . $important;
-                }
-                /* cat hover  bg color */
-                if ( $hover_text_color ) {
-                    $cat_color_hover_css .= 'background:' . $hover_text_color . $important;
-                }
-                /*add hover css*/
-                if ( ! empty( $cat_color_hover_css ) ) {
-                    $local_dynamic_css .= ".gutentor-categories .gutentor-cat-{$category_list->slug}:hover{
+				/* cat hover color */
+				$cat_color_hover_css = '';
+				if ( $hover_bg ) {
+					$cat_color_hover_css .= 'color:' . $hover_bg . $important;
+				}
+				/* cat hover  bg color */
+				if ( $hover_text_color ) {
+					$cat_color_hover_css .= 'background:' . $hover_text_color . $important;
+				}
+				/*add hover css*/
+				if ( ! empty( $cat_color_hover_css ) ) {
+					$local_dynamic_css .= ".gutentor-categories .gutentor-cat-{$category_list->slug}:hover{
                         " . $cat_color_hover_css . '
                     }';
-                }
-            }
-        }
-        return $local_dynamic_css;
-    }
+				}
+			}
+		}
+		return $local_dynamic_css;
+	}
 }
 
 /**
@@ -1295,21 +1302,21 @@ function gutentor_get_query( $attr ) {
 		'ignore_sticky_posts' => true,
 		'post_status'         => 'publish',
 	);
-    /*general*/
-    if ( isset( $attr['post_status'] ) && $attr['post_status'] ) {
-        $query_args['post_status'] = $attr['post_status'];
-    }
-    if ( isset( $attr['offset'] ) && $attr['offset'] && ! ( $query_args['paged'] > 1 ) ) {
-        $query_args['offset'] = $attr['offset'];
-    }
-    if ( isset( $attr['post__in'] ) && $attr['post__in'] ) {
-        $query_args['post__in'] = explode( ',', $attr['post__in'] );
-    }
-    if ( isset( $attr['post__not_in'] ) && $attr['post__not_in'] ) {
-        $query_args['post__not_in'] = explode( ',', $attr['post__not_in'] );
-    }
+	/*general*/
+	if ( isset( $attr['post_status'] ) && $attr['post_status'] ) {
+		$query_args['post_status'] = $attr['post_status'];
+	}
+	if ( isset( $attr['offset'] ) && $attr['offset'] && ! ( $query_args['paged'] > 1 ) ) {
+		$query_args['offset'] = $attr['offset'];
+	}
+	if ( isset( $attr['post__in'] ) && $attr['post__in'] && is_string( $attr['post__in'] ) ) {
+		$query_args['post__in'] = explode( ',', $attr['post__in'] );
+	}
+	if ( isset( $attr['post__not_in'] ) && $attr['post__not_in'] && is_string( $attr['post__not_in'] ) ) {
+		$query_args['post__not_in'] = explode( ',', $attr['post__not_in'] );
+	}
 
-	$post_type  = isset( $attr['post_type'] ) ? $attr['post_type'] : 'post';
+	$post_type = isset( $attr['post_type'] ) ? $attr['post_type'] : 'post';
 	if ( $post_type === 'product' ) {
 		$product_order_by = isset( $attr['orderby'] ) ? $attr['orderby'] : 'date';
 		$product_order    = isset( $attr['order'] ) ? $attr['order'] : 'DESC';
@@ -1326,166 +1333,165 @@ function gutentor_get_query( $attr ) {
 				'taxonomy' => $attr['taxonomy'],
 				'field'    => 'id',
 				'terms'    => $attr['term'],
+				'operator' => $attr['taxOperator'] ? $attr['taxOperator'] : 'IN',
 			),
 		);
 	}
 
-    /*category*/
-    if ( isset( $attr['cat'] ) && $attr['cat'] ) {
-        $query_args['cat'] = $attr['cat'];
-    }
-    if ( isset( $attr['category_name'] ) && $attr['category_name'] ) {
-        $query_args['category_name'] = $attr['category_name'];
-    }
-    if ( isset( $attr['category__in'] ) && $attr['category__in'] ) {
-        $query_args['category__in'] = explode( ',', $attr['category_name'] );
-    }
-    if ( isset( $attr['category__and'] ) && $attr['category__and'] ) {
-        $query_args['category__and'] = explode( ',', $attr['category__and'] );
-    }
-    if ( isset( $attr['category__not_in'] ) && $attr['category__not_in'] ) {
-        $query_args['category__not_in'] = explode( ',', $attr['category__not_in'] );
-    }
+	/*category*/
+	if ( isset( $attr['cat'] ) && $attr['cat'] ) {
+		$query_args['cat'] = $attr['cat'];
+	}
+	if ( isset( $attr['category_name'] ) && $attr['category_name'] ) {
+		$query_args['category_name'] = $attr['category_name'];
+	}
+	if ( isset( $attr['category__in'] ) && $attr['category__in'] && is_string( $attr['category_name'] ) ) {
+		$query_args['category__in'] = explode( ',', $attr['category_name'] );
+	}
+	if ( isset( $attr['category__and'] ) && $attr['category__and'] && is_string( $attr['category__and'] ) ) {
+		$query_args['category__and'] = explode( ',', $attr['category__and'] );
+	}
+	if ( isset( $attr['category__not_in'] ) && $attr['category__not_in'] && is_string( $attr['category__not_in'] ) ) {
+		$query_args['category__not_in'] = explode( ',', $attr['category__not_in'] );
+	}
 
-    /*Tag*/
-    if ( isset( $attr['tag'] ) && $attr['tag'] ) {
-        $query_args['tag'] = $attr['tag'];
-    }
-    if ( isset( $attr['tag_id'] ) && $attr['tag_id'] ) {
-        $query_args['tag_id'] = $attr['tag_id'];
-    }
-    if ( isset( $attr['tag__and'] ) && $attr['tag__and'] ) {
-        $query_args['tag__and'] = explode( ',', $attr['tag__and'] );
-    }
-    if ( isset( $attr['tag__in'] ) && $attr['tag__in'] ) {
-        $query_args['tag__in'] = explode( ',', $attr['tag__in'] );
-    }
-    if ( isset( $attr['tag__not_in'] ) && $attr['tag__not_in'] ) {
-        $query_args['tag__not_in'] = explode( ',', $attr['tag__not_in'] );
-    }
+	/*Tag*/
+	if ( isset( $attr['tag'] ) && $attr['tag'] ) {
+		$query_args['tag'] = $attr['tag'];
+	}
+	if ( isset( $attr['tag_id'] ) && $attr['tag_id'] ) {
+		$query_args['tag_id'] = $attr['tag_id'];
+	}
+	if ( isset( $attr['tag__and'] ) && $attr['tag__and'] && is_string( $attr['tag__and'] ) ) {
+		$query_args['tag__and'] = explode( ',', $attr['tag__and'] );
+	}
+	if ( isset( $attr['tag__in'] ) && $attr['tag__in'] && is_string( $attr['tag__in'] ) ) {
+		$query_args['tag__in'] = explode( ',', $attr['tag__in'] );
+	}
+	if ( isset( $attr['tag__not_in'] ) && $attr['tag__not_in'] && is_string( $attr['tag__not_in'] ) ) {
+		$query_args['tag__not_in'] = explode( ',', $attr['tag__not_in'] );
+	}
 
-    /*author*/
-    if ( isset( $attr['author'] ) && $attr['author'] ) {
-        $query_args['author'] = $attr['author'];
-    }
-    if ( isset( $attr['author_name'] ) && $attr['author_name'] ) {
-        $query_args['author_name'] = $attr['author_name'];
-    }
-    if ( isset( $attr['author__in'] ) && $attr['author__in'] ) {
-        $query_args['author__in'] = explode( ',', $attr['author__in'] );
-    }
-    if ( isset( $attr['author__not_in'] ) && $attr['author__not_in'] ) {
-        $query_args['author__not_in'] = explode( ',', $attr['author__not_in'] );
-    }
+	/*author*/
+	if ( isset( $attr['author'] ) && $attr['author'] ) {
+		$query_args['author'] = $attr['author'];
+	}
+	if ( isset( $attr['author_name'] ) && $attr['author_name'] ) {
+		$query_args['author_name'] = $attr['author_name'];
+	}
+	if ( isset( $attr['author__in'] ) && $attr['author__in'] && is_string( $attr['author__in'] ) ) {
+		$query_args['author__in'] = explode( ',', $attr['author__in'] );
+	}
+	if ( isset( $attr['author__not_in'] ) && $attr['author__not_in'] && is_string( $attr['author__not_in'] ) ) {
+		$query_args['author__not_in'] = explode( ',', $attr['author__not_in'] );
+	}
 
-    /*search*/
+	/*search*/
 	if ( isset( $attr['s'] ) && $attr['s'] ) {
 		$query_args['s'] = $attr['s'];
 	}
 
-    /*post and page*/
-    if ( isset( $attr['p'] ) && $attr['p'] ) {
-        $query_args['p'] = $attr['p'];
-    }
-    if ( isset( $attr['name'] ) && $attr['name'] ) {
-        $query_args['name'] = $attr['name'];
-    }
-    if ( isset( $attr['page_id'] ) && $attr['page_id'] ) {
-        $query_args['page_id'] = $attr['page_id'];
-    }
-    if ( isset( $attr['pagename'] ) && $attr['pagename'] ) {
-        $query_args['pagename'] = $attr['pagename'];
-    }
-    if ( isset( $attr['post_parent'] ) && $attr['post_parent'] ) {
-        $query_args['post_parent'] = $attr['post_parent'];
-    }
-    if ( isset( $attr['post_parent__in'] ) && $attr['post_parent__in'] ) {
-        $query_args['post_parent__in'] = explode( ',', $attr['post_parent__in'] );
-    }
+	/*post and page*/
+	if ( isset( $attr['p'] ) && $attr['p'] ) {
+		$query_args['p'] = $attr['p'];
+	}
+	if ( isset( $attr['name'] ) && $attr['name'] ) {
+		$query_args['name'] = $attr['name'];
+	}
+	if ( isset( $attr['page_id'] ) && $attr['page_id'] ) {
+		$query_args['page_id'] = $attr['page_id'];
+	}
+	if ( isset( $attr['pagename'] ) && $attr['pagename'] ) {
+		$query_args['pagename'] = $attr['pagename'];
+	}
+	if ( isset( $attr['post_parent'] ) && $attr['post_parent'] ) {
+		$query_args['post_parent'] = $attr['post_parent'];
+	}
+	if ( isset( $attr['post_parent__in'] ) && $attr['post_parent__in'] && is_string( $attr['post_parent__in'] ) ) {
+		$query_args['post_parent__in'] = explode( ',', $attr['post_parent__in'] );
+	}
 
-    /*permission*/
-    if ( isset( $attr['has_password'] ) && $attr['has_password'] ) {
-        $query_args['has_password'] = $attr['has_password'];
-    }
-    if ( isset( $attr['post_password'] ) && $attr['post_password'] ) {
-        $query_args['post_password'] = $attr['post_password'];
-    }
+	/*permission*/
+	if ( isset( $attr['has_password'] ) && $attr['has_password'] ) {
+		$query_args['has_password'] = $attr['has_password'];
+	}
+	if ( isset( $attr['post_password'] ) && $attr['post_password'] ) {
+		$query_args['post_password'] = $attr['post_password'];
+	}
 
-    /*comment*/
-    if ( isset( $attr['comment_count'] ) && $attr['comment_count'] ) {
-        $query_args['comment_count'] = $attr['comment_count'];
-    }
+	/*comment*/
+	if ( isset( $attr['comment_count'] ) && $attr['comment_count'] ) {
+		$query_args['comment_count'] = $attr['comment_count'];
+	}
 
-    /*pagination*/
-    if ( isset( $attr['nopaging'] ) && $attr['nopaging'] ) {
-        $query_args['nopaging'] = $attr['nopaging'];
-    }
-    if ( isset( $attr['posts_per_archive_page'] ) && $attr['posts_per_archive_page'] ) {
-        $query_args['posts_per_archive_page'] = $attr['posts_per_archive_page'];
-    }
-    if ( isset( $attr['paged'] ) && $attr['paged'] ) {
-        $query_args['paged'] = $attr['paged'];
-    }
-    if ( isset( $attr['page'] ) && $attr['page'] ) {
-        $query_args['page'] = $attr['page'];
-    }
-    if ( isset( $attr['ignore_sticky_posts'] ) && $attr['ignore_sticky_posts'] ) {
-        $query_args['ignore_sticky_posts'] = $attr['ignore_sticky_posts'];
-    }
+	/*pagination*/
+	if ( isset( $attr['nopaging'] ) && $attr['nopaging'] ) {
+		$query_args['nopaging'] = $attr['nopaging'];
+	}
+	if ( isset( $attr['posts_per_archive_page'] ) && $attr['posts_per_archive_page'] ) {
+		$query_args['posts_per_archive_page'] = $attr['posts_per_archive_page'];
+	}
+	if ( isset( $attr['paged'] ) && $attr['paged'] ) {
+		$query_args['paged'] = $attr['paged'];
+	}
+	if ( isset( $attr['page'] ) && $attr['page'] ) {
+		$query_args['page'] = $attr['page'];
+	}
+	if ( isset( $attr['ignore_sticky_posts'] ) && $attr['ignore_sticky_posts'] ) {
+		$query_args['ignore_sticky_posts'] = $attr['ignore_sticky_posts'];
+	}
 
-    /*permission , mimetype, cache*/
-    if ( isset( $attr['perm'] ) && $attr['perm'] ) {
-        $query_args['perm'] = $attr['perm'];
-    }
-    if ( isset( $attr['post_mime_type'] ) && $attr['post_mime_type'] ) {
-        $query_args['post_mime_type'] = explode( ',', $attr['post_mime_type'] );
-    }
-    if ( isset( $attr['cache_results'] ) && $attr['cache_results'] ) {
-        $query_args['cache_results'] = $attr['cache_results'];
-    }
-    if ( isset( $attr['update_post_meta_cache'] ) && $attr['update_post_meta_cache'] ) {
-        $query_args['update_post_meta_cache'] = $attr['update_post_meta_cache'];
-    }
-    if ( isset( $attr['update_post_term_cache'] ) && $attr['update_post_term_cache'] ) {
-        $query_args['update_post_term_cache'] = $attr['update_post_term_cache'];
-    }
+	/*permission , mimetype, cache*/
+	if ( isset( $attr['perm'] ) && $attr['perm'] ) {
+		$query_args['perm'] = $attr['perm'];
+	}
+	if ( isset( $attr['post_mime_type'] ) && $attr['post_mime_type'] && is_string( $attr['post_mime_type'] ) ) {
+		$query_args['post_mime_type'] = explode( ',', $attr['post_mime_type'] );
+	}
+	if ( isset( $attr['cache_results'] ) && $attr['cache_results'] ) {
+		$query_args['cache_results'] = $attr['cache_results'];
+	}
+	if ( isset( $attr['update_post_meta_cache'] ) && $attr['update_post_meta_cache'] ) {
+		$query_args['update_post_meta_cache'] = $attr['update_post_meta_cache'];
+	}
+	if ( isset( $attr['update_post_term_cache'] ) && $attr['update_post_term_cache'] ) {
+		$query_args['update_post_term_cache'] = $attr['update_post_term_cache'];
+	}
 
-    /*tax query*/
-    if ( isset( $attr['tax_query'] ) && $attr['tax_query'] ) {
-        if(is_array($attr['tax_query'])){
-            $query_args['tax_query'] = $attr['tax_query'];
-            foreach($attr['tax_query'] as $number => $number_array)
-            {
-                foreach($number_array as $data => $data_val)
-                {
-                    if(isset($number_array['terms'])){
-                        $query_args['tax_query'][$number]['terms'] = explode( ',',$number_array['terms'] );
-                    }
-                }
-            }
-        }
-    }
-    if ( isset( $attr['tax_query_relation'] ) && $attr['tax_query_relation'] ) {
-        $query_args['tax_query']['relation'] = $attr['tax_query_relation'] ;
-    }
-    /*meta query*/
-    if ( isset( $attr['meta_query'] ) && $attr['meta_query'] ) {
-        if(is_array($attr['meta_query'])){
-            $query_args['meta_query'] = $attr['meta_query'];
-        }
-    }
-    if ( isset( $attr['meta_query_relation'] ) && $attr['meta_query_relation'] ) {
-            $query_args['meta_query']['relation'] = $attr['meta_query_relation'];
-    }
-    /*date query*/
-    if ( isset( $attr['date_query'] ) && $attr['date_query'] ) {
-        if(is_array($attr['date_query'])){
-            $query_args['date_query'] = $attr['date_query'];
-        }
-    }
-    if ( isset( $attr['date_query_relation'] ) && $attr['date_query_relation'] ) {
-        $query_args['date_query']['relation'] = $attr['date_query_relation'];
-    }
+	/*tax query*/
+	if ( isset( $attr['tax_query'] ) && $attr['tax_query'] ) {
+		if ( is_array( $attr['tax_query'] ) ) {
+			$query_args['tax_query'] = $attr['tax_query'];
+			foreach ( $attr['tax_query'] as $number => $number_array ) {
+				foreach ( $number_array as $data => $data_val ) {
+					if ( isset( $number_array['terms'] ) ) {
+						$query_args['tax_query'][ $number ]['terms'] = explode( ',', $number_array['terms'] );
+					}
+				}
+			}
+		}
+	}
+	if ( isset( $attr['tax_query_relation'] ) && $attr['tax_query_relation'] ) {
+		$query_args['tax_query']['relation'] = $attr['tax_query_relation'];
+	}
+	/*meta query*/
+	if ( isset( $attr['meta_query'] ) && $attr['meta_query'] ) {
+		if ( is_array( $attr['meta_query'] ) ) {
+			$query_args['meta_query'] = $attr['meta_query'];
+		}
+	}
+	if ( isset( $attr['meta_query_relation'] ) && $attr['meta_query_relation'] ) {
+			$query_args['meta_query']['relation'] = $attr['meta_query_relation'];
+	}
+	/*date query*/
+	if ( isset( $attr['date_query'] ) && $attr['date_query'] ) {
+		if ( is_array( $attr['date_query'] ) ) {
+			$query_args['date_query'] = $attr['date_query'];
+		}
+	}
+	if ( isset( $attr['date_query_relation'] ) && $attr['date_query_relation'] ) {
+		$query_args['date_query']['relation'] = $attr['date_query_relation'];
+	}
 	return $query_args;
 }
 
@@ -1497,50 +1503,49 @@ function gutentor_get_query( $attr ) {
  */
 function gutentor_get_term_query( $attr ) {
 
-    $query_args = $attr;
-    if ( isset( $attr['taxonomy'] ) && $attr['taxonomy'] ) {
-        $query_args['taxonomy'] = explode( ',', $attr['taxonomy'] );
-    }
-    if ( isset( $attr['number'] ) && $attr['number'] ) {
-        $query_args['number'] = $attr['number'];
-    }
-    else{
-        $query_args['number'] = 6;
-    }
-    if ( isset( $attr['term_ids'] ) && $attr['term_ids'] ) {
-        $query_args['term_ids'] = explode( ',', $attr['term_ids'] );
-    }
-    if ( isset( $attr['include'] ) && $attr['include'] ) {
-        $query_args['include'] = explode( ',', $attr['include'] );
-    }
-    if ( isset( $attr['exclude'] ) && $attr['exclude'] ) {
-        $query_args['exclude'] = explode( ',', $attr['exclude'] );
-    }
-    if ( isset( $attr['exclude_tree'] ) && $attr['exclude_tree'] ) {
-        $query_args['exclude_tree'] = explode( ',', $attr['exclude_tree'] );
-    }
-    if ( isset( $attr['name'] ) && $attr['name'] ) {
-        $query_args['name'] = explode( ',', $attr['name'] );
-    }
-    if ( isset( $attr['slug'] ) && $attr['slug'] ) {
-        $query_args['slug'] = explode( ',', $attr['slug'] );
-    }
-    if ( isset( $attr['term_taxonomy_id'] ) && $attr['term_taxonomy_id'] ) {
-        $query_args['term_taxonomy_id'] = explode( ',', $attr['term_taxonomy_id'] );
-    }
-    if ( isset( $attr['term_taxonomy_id'] ) && $attr['term_taxonomy_id'] ) {
-        $query_args['term_taxonomy_id'] = explode( ',', $attr['term_taxonomy_id'] );
-    }
-    /*meta query*/
-    if ( isset( $attr['meta_query'] ) && $attr['meta_query'] ) {
-        if(is_array($attr['meta_query'])){
-            $query_args['meta_query'] = $attr['meta_query'];
-        }
-    }
-    if ( isset( $attr['meta_query_relation'] ) && $attr['meta_query_relation'] ) {
-        $query_args['meta_query']['relation'] = $attr['meta_query_relation'];
-    }
-    return $query_args;
+	$query_args = $attr;
+	if ( isset( $attr['taxonomy'] ) && $attr['taxonomy'] ) {
+		$query_args['taxonomy'] = explode( ',', $attr['taxonomy'] );
+	}
+	if ( isset( $attr['number'] ) && $attr['number'] ) {
+		$query_args['number'] = $attr['number'];
+	} else {
+		$query_args['number'] = 6;
+	}
+	if ( isset( $attr['term_ids'] ) && $attr['term_ids'] ) {
+		$query_args['term_ids'] = explode( ',', $attr['term_ids'] );
+	}
+	if ( isset( $attr['include'] ) && $attr['include'] ) {
+		$query_args['include'] = explode( ',', $attr['include'] );
+	}
+	if ( isset( $attr['exclude'] ) && $attr['exclude'] ) {
+		$query_args['exclude'] = explode( ',', $attr['exclude'] );
+	}
+	if ( isset( $attr['exclude_tree'] ) && $attr['exclude_tree'] ) {
+		$query_args['exclude_tree'] = explode( ',', $attr['exclude_tree'] );
+	}
+	if ( isset( $attr['name'] ) && $attr['name'] ) {
+		$query_args['name'] = explode( ',', $attr['name'] );
+	}
+	if ( isset( $attr['slug'] ) && $attr['slug'] ) {
+		$query_args['slug'] = explode( ',', $attr['slug'] );
+	}
+	if ( isset( $attr['term_taxonomy_id'] ) && $attr['term_taxonomy_id'] ) {
+		$query_args['term_taxonomy_id'] = explode( ',', $attr['term_taxonomy_id'] );
+	}
+	if ( isset( $attr['term_taxonomy_id'] ) && $attr['term_taxonomy_id'] ) {
+		$query_args['term_taxonomy_id'] = explode( ',', $attr['term_taxonomy_id'] );
+	}
+	/*meta query*/
+	if ( isset( $attr['meta_query'] ) && $attr['meta_query'] ) {
+		if ( is_array( $attr['meta_query'] ) ) {
+			$query_args['meta_query'] = $attr['meta_query'];
+		}
+	}
+	if ( isset( $attr['meta_query_relation'] ) && $attr['meta_query_relation'] ) {
+		$query_args['meta_query']['relation'] = $attr['meta_query_relation'];
+	}
+	return $query_args;
 }
 
 /**
@@ -1633,6 +1638,7 @@ function gutentor_admin_get_post_types( $args = array( 'public' => true ), $excl
 		'page',
 		'post',
 		'attachment',
+		'gutentor-template',
 	);
 	$exclude_pt = array_unique( array_merge( $exclude_pt, $excludes ) );
 	$exclude_pt = array_diff( $exclude_pt, $includes );
@@ -1951,6 +1957,15 @@ if ( ! function_exists( 'gutentor_is_load_resource' ) ) {
 
 		switch ( $resource ) {
 
+			case 'fontawesome':
+			case 'wpnessgrid':
+			case 'animatecss':
+			case 'wow':
+				if ( gutentor_has_gutentor_block() ) {
+					$load = true;
+				}
+				break;
+
 			case 'acmeticker':
 				if ( gutentor_has_block( 'gutentor/p5' ) ) {
 					$load = true;
@@ -1973,6 +1988,13 @@ if ( ! function_exists( 'gutentor_is_load_resource' ) ) {
 			case 'easypiechart':
 				if ( gutentor_has_block( 'gutentor/progress-bar' )
 					|| gutentor_has_block( 'gutentor/e9' ) ) {
+					$load = true;
+				}
+				break;
+
+			case 'googlemap':
+				if ( gutentor_has_block( 'gutentor/google-map' )
+					|| gutentor_has_block( 'gutentor/e4' ) ) {
 					$load = true;
 				}
 				break;
@@ -2017,8 +2039,8 @@ if ( ! function_exists( 'gutentor_is_load_resource' ) ) {
 			case 'masonry':
 				if ( gutentor_has_block( 'gutentor/gallery' )
 					|| gutentor_has_block( 'gutentor/m10' )
-                    || gutentor_has_block( 'gutentor/p1' )
-                ) {
+					|| gutentor_has_block( 'gutentor/p1' )
+				) {
 					$load = true;
 				}
 				break;
@@ -2071,6 +2093,8 @@ if ( ! function_exists( 'gutentor_setting_enable_export_template_button' ) ) {
 		return gutentor_get_options( 'enable-export-block' );
 	}
 }
+
+
 
 /**
  * Get Gutentor Block Full Name.
@@ -2164,6 +2188,38 @@ if ( ! function_exists( 'gutentor_get_dynamic_element' ) ) {
 	}
 }
 
+/**
+ *Get dynamic Element
+ *
+ * @since 3.1.0
+ */
+if ( ! function_exists( 'gutentor_get_term_dynamic_element' ) ) {
+	function gutentor_get_term_dynamic_element( $term ) {
+		$response  = array();
+		$g_options = gutentor_get_options();
+		if ( isset( $g_options['ttel'] ) ) {
+			if ( isset( $g_options['ttel'][ $term->taxonomy ] ) ) {
+				if ( isset( $g_options['ttel'][ $term->taxonomy ]['elem'] ) ) {
+					$response = $g_options['ttel'][ $term->taxonomy ]['elem'];
+				}
+			}
+		}
+		$dynamic_element = array();
+		if ( $response ) {
+			if ( isset( $response['meta'] ) ) {
+				foreach ( $response['meta'] as $key => $value ) {
+					$meta = get_term_meta( $term->term_id, $key, true );
+					if ( is_string( $meta ) || is_numeric( $meta ) ) {
+						$dynamic_element[ 'meta/' . $key ] = $meta;
+					} else {
+						$dynamic_element[ 'meta/' . $key ] = false;
+					}
+				}
+			}
+		}
+		return $dynamic_element;
+	}
+}
 
 /**
  * Check has Featured
@@ -2178,5 +2234,88 @@ if ( ! function_exists( 'gutentor_has_post_featured' ) ) {
 			return true;
 		}
 		return false;
+	}
+}
+
+/**
+ * Check if site editor screen
+ *
+ * @since    3.1.9
+
+ * @return [boolean]
+ */
+if ( ! function_exists( 'gutentor_is_site_editor_screen' ) ) {
+	function gutentor_is_site_editor_screen() {
+		if ( get_current_screen() &&
+			get_current_screen()->base === 'site-editor'
+			&& get_current_screen()->is_block_editor ) {
+			return true;
+		}
+		return false;
+	}
+}
+
+/**
+ * FSE Fixed
+ *
+ * @since    3.1.9
+
+ * @return [boolean]
+ */
+if ( ! function_exists( 'gutentor_is_fse_template' ) ) {
+	function gutentor_is_fse_template() {
+		global $_wp_current_template_content;
+		if ( current_theme_supports( 'block-templates' ) && $_wp_current_template_content ) {
+			return true;
+		}
+		return false;
+
+	}
+}
+
+
+/**
+ * Simple check for validating a URL, it must start with http:// or https://.
+ * and pass FILTER_VALIDATE_URL validation.
+ *
+ * @since    3.2.1
+
+ * @return [boolean]
+ */
+if ( ! function_exists( 'gutentor_is_valid_url' ) ) {
+	function gutentor_is_valid_url( $url ) {
+
+		// Must start with http:// or https://.
+		if ( 0 !== strpos( $url, 'http://' ) && 0 !== strpos( $url, 'https://' ) ) {
+			return false;
+		}
+
+		// Must pass validation.
+		if ( ! filter_var( $url, FILTER_VALIDATE_URL ) ) {
+			return false;
+		}
+
+		return true;
+
+	}
+}
+
+/**
+ * Update installed time
+ *
+ * @since    3.2.1
+
+ * @return void
+ */
+if ( ! function_exists( 'gutentor_add_installed_time' ) ) {
+	function gutentor_add_installed_time() {
+		$helper_options = json_decode( get_option( '__gutentor_helper_options' ), true );
+		if ( ! isset( $helper_options['installed_time'] ) || ! $helper_options['installed_time'] ) {
+			$helper_options['installed_time'] = time();
+			update_option(
+				'__gutentor_helper_options',
+				wp_json_encode( $helper_options )
+			);
+		}
 	}
 }

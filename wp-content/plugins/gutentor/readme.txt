@@ -3,14 +3,14 @@
 Contributors: gutentor, acmeit, addonspress, codersantosh
 Donate link: https://www.gutentor.com/
 Tags: gutenberg, block, blocks, gutenberg blocks, editor, page-builder, visual editor, wysiwyg, design, google fonts, patterns, reusable, block editor, drag-and-drop, landing page, website builder, landing page builder, guten, gutentor, editor, gutenberg-blocks, gutenberg editor
-Requires at least: 5.0
-Tested up to: 5.8.3
+Requires at least: 5.5
+Tested up to: 6.0
 Requires PHP: 5.6.20
-Stable tag: 3.1.8
+Stable tag: 3.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Advanced yet easy, Gutenberg editor page builder blocks. Create a masterpiece, pixel perfect websites using modern WordPress Gutenberg blocks.
+Advanced yet easy, Gutenberg editor page builder blocks. Create a masterpiece, pixel perfect website using modern WordPress Gutenberg blocks.
 
 == Description ==
 
@@ -24,7 +24,7 @@ It’s time for [Gutentor - Page Builder for Gutenberg](https://www.gutentor.com
 
 Gutentor is a WordPress Page Building Gutenberg Blocks collections with unlimited possibilities to design a webpage. Building professional elegant websites using the new WordPress editor Gutenberg with very ease and with no absolute codes is what Gutentor is designed for. A page builder experience that brings advanced capabilities and graceful design never seen before on any Page Builder. Work with any theme, create any design.
 
-Gutentor extends Gutenberg editor with a large variety of beautiful blocks which can be later switched to build and design your best web pages with some clicks. This makes creating and designing content even more flexible. It minimizes the limitations of any page builders and adds unlimited possibilities so that a user can build any simple to complex WordPress website using the Gutenberg editor. It has been developed with all necessary customization features for blocks to achieve any possible layout and design of web-page content with Gutenberg block editor. Gutentor makes designing any type of web pages just as simple as a matter of a few clicks and drag and drop.
+Gutentor extends Gutenberg editor with a large variety of beautiful blocks which can be later switched to build and design your best web pages with some clicks. This makes creating and designing content even more flexible. It minimizes the limitations of any page builder and adds unlimited possibilities so that a user can build any simple to complex WordPress website using the Gutenberg editor. It has been developed with all necessary customization features for blocks to achieve any possible layout and design of web-page content with Gutenberg block editor. Gutentor makes designing any type of web page just as simple as a matter of a few clicks and drag and drop.
 
 Gutentor is a lightweight WordPress plugin, it is optimized for performance. Internal or External CSS files for dynamic CSS is introduced for more optimization.
 
@@ -35,7 +35,7 @@ Gutentor is a lightweight WordPress plugin, it is optimized for performance. Int
 * SEO friendly
 * One-click Demo Templates Library for ready-made templates and blocks
 * Faster Designing Experience
-* Extremely simple, without adding row/columns, just adding block is sufficient to make a beautiful website
+* Extremely simple, without adding rows/columns, just adding blocks is sufficient to make a beautiful website
 * Repeater field to create items inside blocks with drag and drop reorder, edit, delete options
 * Highly customizable row/columns options available for creative designers
 * Advanced options on each block including HTML Tag, Background, Border, Box-shadow, Margin-Padding, Svg shape divider and built-in animations
@@ -80,7 +80,7 @@ Gutentor just does not help you to create your site more beautiful and quickly b
 
 == ADVANCED PAGE BUILDING GUTENBERG BLOCKS INSIDE GUTENTOR ==
 
-Gutentor Blocks are categorized on 5 different types:
+Gutentor Blocks are categorized into 5 different types:
 
 === 1. GUTENTOR ELEMENTS ===
 
@@ -189,7 +189,7 @@ Gutentor elements are conceptualized to use inside the Gutentor Modules but of c
 
 - **Progress Bar:** Showcase the progress of the work in an animated form.
 
-- **Rating:** Insert the rating element to represent the rating from 1-5 star.
+- **Rating:** Insert the rating element to represent the rating from 1-5 stars.
 
 - **Simple Text:** Insert text with minimal but sufficient options.
 
@@ -244,7 +244,7 @@ Gutenberg Block in Gutentor Post
 
 - **Post (Type) Feature:** - Showcase your Blog Article Post with an attractive design template. Currently, we have 38 unique and lovely templates available with advanced design options. You can create an unlimited number of stunning blog section designs for your site and customize them as per your need. This block module is developed especially for blog, news or magazine sites.
 
-- **Advanced Post (Type):** - Advanced Post (Type) is a combination of multiple blocks like Post (Type), Post Header and Post Footer. Post Header is a template combination of Gutentor Simple Text, Term Filter and Navigation. Similarly, Post Footer is a template combination of Gutentor Simple Text, Term Filter, Pagination, Navigation and Load more button. This module is the most advanced block we have ever build, try it out and control each element.
+- **Advanced Post (Type):** - Advanced Post (Type) is a combination of multiple blocks like Post (Type), Post Header and Post Footer. Post Header is a template combination of Gutentor Simple Text, Term Filter and Navigation. Similarly, Post Footer is a template combination of Gutentor Simple Text, Term Filter, Pagination, Navigation and Load more button. This module is the most advanced block we have ever built, try it out and control each element.
 
 - **Post (Type) Carousel:** - Post (Type) Carousel use Post (Type) as an inner block. You have all options of Post (Type) on Post (Type) Carousel with added Advanced Carousel Options. Since we are using the framework Slick Carousel, we have added almost all possible and useful options related to the Slick Carousel. Create a beautiful and unique Post Carousel using our Post (Type) Carousel.
 
@@ -258,17 +258,17 @@ Gutenberg Block in Gutentor Post
 
 - **Term (Category) Feature:** - 38 unique and lovely templates to showcase your Category and Term similar to Post (Type) Feature. Very useful to Blog, Magazine and E-commerce sites.
 
-- **Term (Category) Carousel:** - Term (Category) Carousel Block use Term (Category) as an inner block. You will find almost every options to customize your Term (Category) Carousel.
+- **Term (Category) Carousel:** - Term (Category) Carousel Block use Term (Category) as an inner block. You will find almost every option to customize your Term (Category) Carousel.
 
 === 5. GUTENTOR WIDGETS ===
 
 Gutentor widgets are independent blocks, a very simple way to create your site section and blocks. The main difference between Gutentor Module and Gutentor Widgets is Gutentor widgets have already predefined elements, you will not be able to add new elements whereas on Gutentor Modules you can/have to add individual Gutentor Elements as you want.
 
-- **About Widget:** Gutentor’s About block lets you add titles, photo, description and buttons to design the about section of your web page. You can choose the About Block design from 3 preset Template. Each individuals elements has its options for colour, margin-padding, typography, border and other necessary options.
+- **About Widget:** Gutentor’s About block lets you add titles, photos, descriptions and buttons to design the about section of your web page. You can choose the About Block design from 3 preset Templates. Each individual element has its options for colour, margin-padding, typography, border and other necessary options.
 
 - **Accordion Widget:** It is designed to have collapsible rows to hide or open any content on the page. Generally, it is used for FAQs and other informative messages.
 
-- **Advanced List Widget:** The Advanced List Block helps to represent list item with default HTML list, icon, or image with column and other advanced options.
+- **Advanced List Widget:** The Advanced List Block helps to represent list items with default HTML list, icon, or image with column and other advanced options.
 
 - **Author Profile Widget:** This block has been built especially for displaying the detailed description of certain authors.
 
@@ -280,15 +280,15 @@ Gutentor widgets are independent blocks, a very simple way to create your site s
 
 - **Countdown Widget:** This block is useful for setting a countdown feature on your website. It is extremely helpful for any event show related website.
 
-- **Counter Widget:** Counter Block represents the facts and figures related to any product, item or any product with cool animation, features and many more fascinated templates.
+- **Counter Widget:** Counter Block represents the facts and figures related to any product, item or product with cool animation, features and many more fascinated templates.
 
 - **Featured Widget:** The Featured block displays a large section with a photo, title, description, and button. Mainly, it is used in the header part of the site.
 
-- **Gallery Widget:** The Gallery Block allows a user to create a captivating gallery of image with a caption to showcase images of portfolio, services or products.
+- **Gallery Widget:** The Gallery Block allows a user to create a captivating gallery of images with a caption to showcase images of portfolio, services or products.
 
-- **Google Map Widget:** Google Map Block facilitates user to display the location of an organization, company or any place. You can let visitors know where your company is exactly positioned.
+- **Google Map Widget:** Google Map Block facilitates users to display the location of an organization, company or any place. You can let visitors know where your company is exactly positioned.
 
-- **Icon Widget:** Icon Block is useful to represent any icon of any sort of items on your website.
+- **Icon Widget:** Icon Block is useful to represent any icon of any sort of item on your website.
 
 - **Image Widget:** The Image Block is generated to display information with an image in a standard and unique way. You can also add a title, description, and button along with the image.
 
@@ -302,19 +302,19 @@ Gutentor widgets are independent blocks, a very simple way to create your site s
 
 - **Progress Bar Widget:** The progress bar block is designed to let the user create a customizable bar and/or circle progress counter to represent percentage values.
 
-- **Restaurant Menu Widget:** The Restaurant Menu Block has been designed particularly for users building website in restaurants or cafes. It is used for preparing online menus.
+- **Restaurant Menu Widget:** The Restaurant Menu Block has been designed particularly for users building websites in restaurants or cafes. It is used for preparing online menus.
 
 - **Social Links Widget:** The Social Links Block displays the social networks page on a website with different templates and several features.
 
-- **Show More Widget:** The Show More Block helps the user to display certain excerpt or less text of the content and after clicking the show more button then it will display the full content.
+- **Show More Widget:** The Show More Block helps the user to display certain excerpts or less text of the content and after clicking the show more button then it will display the full content.
 
-- **Tabs Widget:** The Tabs Block facilitates user to display content in a fully tabbed UX which contains title, description and buttons with many templates.
+- **Tabs Widget:** The Tabs Block facilitates users to display content in a fully tabbed UX which contains title, description and buttons with many templates.
 
 - **Team Widget:** With the Team Block users can create an attractive and sophisticated team section where they can represent the team members of their company professionally.
 
 - **Testimonial Widget:** The Testimonial Block is used to display the feedback or quotation given by your user which helps site visitors to trust in your product, services.
 
-- **Timeline Widget:** The Timeline Block is one of the most significant blocks builds for your website. It is used to represent the user information or events in chronological order with different styles.
+- **Timeline Widget:** The Timeline Block is one of the most significant blocks built for your website. It is used to represent the user information or events in chronological order with different styles.
 
 - **Video Popup Widget:** The Video Popup Block display video from YouTube, Vimeo link or custom uploaded a video in popup mode with several styles. Advanced video control options are available.
 
@@ -322,7 +322,15 @@ Gutentor widgets are independent blocks, a very simple way to create your site s
 
 =  Is Gutentor free? =
 
-Yes, Gutentor is a free WordPress Page Building Block Plugin. We can proudly say you will get more awesome features on Gutentor for Free than most of the Premium Plugin does not provide. Have any suggestions, create a new [Feature Request](https://wordpress.org/support/plugin/gutentor/)
+Yes, Gutentor is a free WordPress Page Building Block Plugin. We can proudly say you will get more awesome features on Gutentor for Free than most of the Premium Plugin do not provide. Have any suggestions, create a new [Feature Request](https://wordpress.org/support/plugin/gutentor/)
+
+=  Does Gutentor have a Premium version? =
+
+Yes, Gutentor has a Premium Version. You can buy it from [Pricing](https://www.gutentor.com/pricing/) Page.
+
+=  Are you going to move the features of the free version to the premium version? =
+
+Absolutely NOT. All the features in the free version will always remains in it. The premium version will provide added Premium Features, Premium Supports, Premium Template Kits and Templates and other premium features.
 
 =  How can you say Gutentor makes the site faster? =
 
@@ -382,6 +390,66 @@ Yes, We provide Free Support via [WordPress Support Forum](https://wordpress.org
 9. Gutentor Blocks: Gutentor provide complete site-building blocks and elements
 
 == Changelog ==
+
+= 3.2.4 - 2022-08-03 =
+* Updated: Some Gutentor block in FSE template parts
+* Updated: Dynamic CSS on inner blocks FSE template parts
+* Fixed: Import button on FSE template change
+* Fixed: Single item icon button on FSE template
+* Fixed: [Favorite Button](https://wordpress.org/support/topic/finally-327/) on [Templateberg](https://wordpress.org/plugins/templateberg/)
+* Fixed: Sticky Options
+
+= 3.2.3 - 2022-06-22 =
+* Added: [Collapsed by Default](https://wordpress.org/support/topic/toggle-panel-on-table-of-contents/#post-15757878)
+* Added: [FSE Editor Compatibility](https://wordpress.org/support/topic/anyone-elses-advanced-columns-get-stacked-instead-of-display-as-columns/)
+* Updated: FSE Editor Font Family
+* Updated: FSE Editor Dynamic CSS Support
+* Fixed: FSE current post id on Advanced Post Type
+* Fixed: Module : Gallery > Popup > Icon > Position > Custom Dynamic CSS
+* Fixed: [Js error in the Gutentor Settings page](https://wordpress.org/support/topic/js-error-in-the-gutentor-settings-page/#post-15758316)
+
+= 3.2.2 - 2022-06-10 =
+* Fixed: Unnecessary comma removed
+* Fixed: [Some missing color issue](https://wordpress.org/support/topic/crash-blocks/)
+
+= 3.2.1 - 2022-06-09 =
+* Added: WP Query support with ‘IN’, ‘NOT IN’, ‘AND’, ‘EXISTS’ and ‘NOT EXISTS’ for Taxonomy Terms
+* Added: [Width and Height properties on image](https://wordpress.org/support/topic/about-box-image-size/)
+* Added: [Enable/Disable Responsive Menu on Advanced Post Type](https://wordpress.org/support/topic/issues-with-advanced-post/)
+* Added: Placeholder text on Image element
+* Added: License information
+* Fixed: [No Tags in Advanced Post (Type) Block in Front-End](https://wordpress.org/support/topic/no-tags-in-advanced-post-type-block-in-front-end/)
+* Fixed: [Duplex Post (Type) , image link](https://wordpress.org/support/topic/duplex-post-type-image-link/)
+* Fixed: [Category term 2 and product categories](https://wordpress.org/support/topic/category-term-2-and-product-categories/)
+* Fixed: [ids setting not show in backend](https://wordpress.org/support/topic/ids-setting-not-show-in-backend/)
+* Fixed: [Post Type Read More button text visible on editing but not on site](https://wordpress.org/support/topic/post-type-read-more-button-text-visible-on-editing-but-not-on-site/)
+* Fixed: Term Category Features Block error on selecting none.
+* Fixed: Icon missing on Icon Picker.
+* Fixed: [CSS on FSE Template Parts](https://wordpress.org/support/topic/advanced-text-in-footer-not-work-google-fonts/)
+* Fixed: [Resources Load on some cases](https://wordpress.org/support/topic/anyone-elses-advanced-columns-get-stacked-instead-of-display-as-columns/)
+* Updated: [Social Links Widget](https://wordpress.org/support/topic/social-links-widget-not-working/)
+* Updated: Tags with separator
+* Updated: EDD and WooCommerce default image on frontend
+* Updated: Gallery Module Message
+* Updated: Divider: Height limited value
+* Updated: Advanced Text Position
+* Updated: Advanced > Block Shape > SVG options > Custom issue : correct html
+* Updated: [Gutentor loading unused scripts](https://wordpress.org/support/topic/gutentor-loading-unused-scripts)
+* Updated: Some editor design
+
+= 3.2.0 - 2022-02-11 =
+* Fixed: Importing some templates
+* Fixed: [Some blocks not working inside tabs](https://wordpress.org/support/topic/term-category-carousel-block-not-working-inside-tabs/)
+* Updated: Animation on FSE templates
+* Updated: Global settings some minor design
+* Updated: Content alignment on some modules
+
+= 3.1.9 - 2022-02-03 =
+* Added: Full Site Editing CSS Support
+* Updated: Global settings some minor design
+* Updated: Remove Customizer Setting
+* Updated: Toolbar design for dynamic content
+* Updated: Template library design
 
 = 3.1.8 - 2022-01-19 =
 * Added: Gradient options in Module Carousel, Module Post Carousel, Module Term Carousel & Module Slider => Arrow & Dots

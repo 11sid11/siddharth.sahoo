@@ -45,6 +45,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 
 			// Load our editor scripts.
 			add_action( 'init', array( $this, 'register_block_editor_assets' ) );
+			add_action( 'enqueue_block_editor_assets', array( $this, 'register_block_editor_assets_admin' ) );
 
 			add_filter( 'init', array( $this, 'register_frontend_assets_nodep' ) );
 
@@ -60,6 +61,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 
 			// Add theme classes for compatibility detection.
 			add_action( 'body_class', array( $this, 'add_body_class_theme_compatibility' ) );
+			add_action( 'admin_body_class', array( $this, 'add_body_class_theme_compatibility' ) );
 		}
 
 		/**
@@ -112,9 +114,11 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				wp_register_script( 'ugb-block-frontend-js', null, [], STACKABLE_VERSION );
 			}
 
-			wp_localize_script( 'ugb-block-frontend-js', 'stackable', array(
+			$args = apply_filters( 'stackable_localize_frontend_script', array(
 				'restUrl' => get_rest_url(),
+				'i18n' => array(), // Translatable labels used in the frontend should go here.
 			) );
+			wp_localize_script( 'ugb-block-frontend-js', 'stackable', $args );
 
 			// Frontend only scripts.
 			// if ( ! is_admin() ) {
@@ -230,6 +234,29 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		}
 
 		/**
+		 * Enqueue CodeMirror separately. This originally was enqueued in
+		 * `register_block_editor_assets`, but we want to enqueue this only when
+		 * Gutenberg is loaded. Other plugins may use CodeMirror in other parts
+		 * of the admin, and us enqueuing it may interfere with how their plugin
+		 * works.
+		 *
+		 * @since 3.2.0
+		 */
+		public function register_block_editor_assets_admin() {
+			$current_screen = get_current_screen();
+			if ( $current_screen->is_block_editor() ) {
+				// Enqueue CodeMirror for Custom CSS.
+				wp_enqueue_code_editor( array(
+					'type' => 'text/css', // @see https://developer.wordpress.org/reference/functions/wp_get_code_editor_settings/
+					'codemirror' => array(
+						'indentUnit' => 2,
+						'tabSize' => 2,
+					),
+				) );
+			}
+		}
+
+		/**
 		 * Enqueue block assets for backend editor.
 		 *
 		 * @since 0.1
@@ -238,15 +265,6 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 			if ( ! is_admin() ) {
 				return;
 			}
-
-			// Enqueue CodeMirror for Custom CSS.
-			wp_enqueue_code_editor( array(
-				'type' => 'text/css', // @see https://developer.wordpress.org/reference/functions/wp_get_code_editor_settings/
-				'codemirror' => array(
-					'indentUnit' => 2,
-					'tabSize' => 2,
-				),
-			) );
 
 			// Backend editor scripts: common vendor files.
 			wp_register_script(
@@ -301,6 +319,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				'settingsUrl' => admin_url( 'options-general.php?page=stackable' ),
 				'version' => array_shift( $version_parts ),
 				'wpVersion' => $wp_version,
+				'adminUrl' => admin_url(),
 
 				// Fonts.
 				'locale' => get_locale(),
@@ -311,7 +330,7 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				// Premium related variables.
 				'isPro' => sugb_fs()->can_use_premium_code(),
 				'showProNotice' => stackable_should_show_pro_notices(),
-				'pricingURL' => sugb_fs()->get_upgrade_url(),
+				'pricingURL' => 'https://wpstackable.com/premium/?utm_source=wp-settings&utm_campaign=gopremium&utm_medium=wp-dashboard',
 				'planName' => sugb_fs()->is_plan( 'starter', true ) ? 'starter' :
 							( sugb_fs()->is_plan( 'professional', true ) ? 'professional' : 'business' ),
 
@@ -383,6 +402,13 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 		 * make our blocks look better.
 		 */
 		public function add_body_class_theme_compatibility( $classes ) {
+			// admin_body_class provides a space-separated-string, body_class
+			// provides an array. Let's support both.
+			$convert_to_string = is_string( $classes );
+			if ( $convert_to_string ) {
+				$classes = explode( ' ', $classes );
+			}
+
 			if ( defined( 'ASTRA_THEME_VERSION' ) ) {
 				$classes[] = 'stk--is-astra-theme';
 			} else if ( class_exists( 'Blocksy_Translations_Manager' ) ) {
@@ -393,8 +419,11 @@ if ( ! class_exists( 'Stackable_Init' ) ) {
 				$classes[] = 'stk--is-kadence-theme';
 			} else if ( class_exists( 'Storefront' ) ) {
 				$classes[] = 'stk--is-storefront-theme';
+			} else if ( function_exists( 'twentytwentytwo_support' ) ) {
+				$classes[] = 'stk--is-twentytwentytwo-theme';
 			}
-			return $classes;
+
+			return $convert_to_string ? implode( ' ', $classes ) : $classes;
 		}
 
 		/**

@@ -84,8 +84,8 @@ if ( ! class_exists( 'Gutentor_T1_Templates' ) ) {
 								$output .= $this->get_term_button( $term, $attributes );
 							break;
 						default:
-							$output .= '';
-							break;
+                            $output .= $this->get_term_dynamic_element( $element,$term, $attributes );
+                            break;
 					}
 				endforeach;
 			endif;
@@ -131,9 +131,9 @@ if ( ! class_exists( 'Gutentor_T1_Templates' ) ) {
 						case 'button':
 							$output .= $this->get_term_button( $term, $attributes );
 							break;
-						default:
-							$output .= '';
-							break;
+                        default:
+                            $output .= $this->get_term_dynamic_element( $element,$term, $attributes );
+                            break;
 					}
 				endforeach;
 			endif;
@@ -182,9 +182,9 @@ if ( ! class_exists( 'Gutentor_T1_Templates' ) ) {
 						case 'button':
 							$output .= $this->get_term_button( $term, $attributes );
 							break;
-						default:
-							$output .= '';
-							break;
+                        default:
+                            $output .= $this->get_term_dynamic_element( $element,$term, $attributes );
+                            break;
 					}
 				endforeach;
 			endif;

@@ -7,7 +7,7 @@
  * Author: Gambit Technologies, Inc
  * Author URI: http://gambit.ph
  * Text Domain: stackable-ultimate-gutenberg-blocks
- * Version: 3.1.2
+ * Version: 3.4.5
  *
  * @package Stackable
  */
@@ -23,7 +23,7 @@ if ( function_exists( 'sugb_fs' ) ) {
 }
 
 defined( 'STACKABLE_SHOW_PRO_NOTICES' ) || define( 'STACKABLE_SHOW_PRO_NOTICES', true );
-defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '3.1.2' );
+defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '3.4.5' );
 defined( 'STACKABLE_FILE' ) || define( 'STACKABLE_FILE', __FILE__ );
 defined( 'STACKABLE_I18N' ) || define( 'STACKABLE_I18N', 'stackable-ultimate-gutenberg-blocks' );
 // Plugin slug.
@@ -176,12 +176,15 @@ require_once plugin_dir_path( __FILE__ ) . 'src/multisite.php';
 require_once plugin_dir_path( __FILE__ ) . 'src/dynamic-breakpoints.php';
 require_once plugin_dir_path( __FILE__ ) . 'src/design-library/init.php';
 require_once plugin_dir_path( __FILE__ ) . 'src/global-settings.php';
+require_once plugin_dir_path( __FILE__ ) . 'src/custom-block-styles.php';
+require_once plugin_dir_path( __FILE__ ) . 'src/css-optimize.php';
 require_once plugin_dir_path( __FILE__ ) . 'src/plugins/premium-notice/index.php';
 require_once plugin_dir_path( __FILE__ ) . 'src/block/accordion/index.php';
 require_once plugin_dir_path( __FILE__ ) . 'src/block/count-up/index.php';
 require_once plugin_dir_path( __FILE__ ) . 'src/block/expand/index.php';
 require_once plugin_dir_path( __FILE__ ) . 'src/block/notification/index.php';
 require_once plugin_dir_path( __FILE__ ) . 'src/block/video-popup/index.php';
+require_once plugin_dir_path( __FILE__ ) . 'src/block/map/index.php';
 /**
  * Welcome screen.
  */

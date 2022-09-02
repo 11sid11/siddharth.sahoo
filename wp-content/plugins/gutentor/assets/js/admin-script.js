@@ -63,14 +63,17 @@
 		});
 
         /*Video*/
-        $('.gutentor-getting-started-watch-video').magnificPopup({
-            disableOn: 700,
-            type: 'iframe',
-            mainClass: 'mfp-fade',
-            removalDelay: 160,
-            preloader: false,
-            fixedContentPos: false,
-        });
+		/*WOW*/
+		if ($('.gutentor-getting-started-watch-video').length) {
+			$('.gutentor-getting-started-watch-video').magnificPopup({
+				disableOn: 700,
+				type: 'iframe',
+				mainClass: 'mfp-fade',
+				removalDelay: 160,
+				preloader: false,
+				fixedContentPos: false,
+			});
+		}
 
 		/*Color Picker
 		* Copied for FieldPress
@@ -311,7 +314,9 @@
 						{
 							title: media_title,
 							button: { text:  media_button },
-							library: {type: 'video/MP4'},
+							library: {
+								type: [ 'video/mp4' ]
+							},
 						}
 					);
 					// Opens the media library frame.
@@ -329,7 +334,7 @@
 							var video = $(
 								'<video />',
 								{
-									id: 'video',
+									class: 'gutentor-video-preview',
 									src: media_attachment.url,
 									type: 'video/mp4',
 									controls: true
